@@ -62,11 +62,13 @@ object SensorDataStream {
             node.put(MySensorData.Type_field_name, typeValue)
           else
             break
+          /*
           val timeValue = util.MyKuduTypeValue.getTimestamp(node, MySensorData.Time_field_name)
           if (timeValue != null)
             node.put(MySensorData.Time_field_name, timeValue)
           else
             break
+           */
 
           import scala.collection.JavaConverters._
           val origObjNode = MyJackson.getRemoved(node, Useless_from_beginning_exclude_field_Arr.toList.asJava).asInstanceOf[ObjectNode]
