@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea
+*.iml
+*.log
+logs
+target
+sensordata2dw.properties
+sensordata2dw.xml
+module_sensordata2dw.xml

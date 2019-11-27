@@ -1,0 +1,82 @@
+[
+  {
+    "distinct_id": "12345",
+    "type": "profile_set",
+    "time": 1435290195610,
+    "project_id": 2,
+    "project": "ebiz_test",
+    "properties": {
+      "$province":"湖南",
+      "FavoriteFruits": [
+        "苹果","香蕉","芒果"
+      ],
+      "Age":33,
+      "$city":"长沙",
+      "IncomeLevel": "3000~5000",
+      "$name": "小明",
+      "Gender":"男",
+      "$signup_time": "2015-06-26 11:43:15.610"
+    }
+  },
+  {
+    "distinct_id": "12345",
+    "type": "profile_set_once",
+    "time": 1435290195610,
+    "project_id": 2,
+    "project": "ebiz_test",
+    "properties": {
+      "$province":"湖南",
+      "FavoriteFruits": [
+        "苹果","香蕉","芒果"
+      ],
+      "Age":33,
+      "$city":"长沙",
+      "IncomeLevel": "3000~5000",
+      "$name": "小明",
+      "Gender":"男",
+      "$signup_time": "2015-06-26 11:43:15.610"
+    }
+  },
+  {
+    "distinct_id": "12345",
+    "type": "profile_increment",
+    "time": 1435290200354,
+    "project_id": 2,
+    "project": "ebiz_test",
+    "properties": {
+      "Age": 1
+    }
+  },
+  {
+    "distinct_id": "12345",
+    "type": "profile_delete",
+    "time": 1437290200354,
+    "project_id": 2,
+    "project": "ebiz_test",
+    "properties":{
+    }
+  },
+  {
+    "distinct_id": "12345",
+    "type": "profile_append",
+    "time": 1437280200354,
+    "project_id": 2,
+    "project": "ebiz_test",
+    "properties": {
+      "FavoriteFruits": [
+        "橘子","西瓜"
+      ]
+    }
+  },
+  {
+    "distinct_id":"12345",
+    "type":"profile_unset",
+    "time":1437280200354,
+    "project_id": 2,
+    "project": "ebiz_test",
+    "properties":{
+      "Age":true,
+      "FavoriteFruits":true
+    }
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "distinct_id" : "16e9bd6fe161-0c1045aaf1e521-44034d2e-480000-16e9bd6fe1728a",
+  "lib" : {
+    "$lib" : "js",
+    "$lib_method" : "code",
+    "$lib_version" : "1.11.6"
+  },
+  "$first_visit_time" : "2019-11-24 13:16:32.507",
+  "$first_referrer" : "http://www.baidu.com/s?word=保证金外汇&tn=78040160_15_pg&ch=2&ie=utf-8",
+  "$first_browser_language" : "取值异常",
+  "$first_browser_charset" : "UTF-8",
+  "$first_referrer_host" : "www.baidu.com",
+  "$first_traffic_source_type" : "自然搜索流量",
+  "$first_search_keyword" : "保证金外汇",
+  "type" : "profile_set_once",
+  "time" : "16e9bd6fe161-0c1045aaf1e521-44034d2e-480000-16e9bd6fe1728a",
+  "dtk" : [ "$first_visit_time" ],
+  "map_id" : "16e9bd6fe161-0c1045aaf1e521-44034d2e-480000-16e9bd6fe1728a",
+  "user_id" : 8239961913671389382,
+  "recv_time" : 1574572592507,
+  "extractor" : {
+    "f" : "(dev=fc10,ino=3417325)",
+    "o" : 3494513,
+    "n" : "access_log.2019112413",
+    "s" : 567365449,
+    "c" : 567365449,
+    "e" : "data01.weiju.sa"
+  },
+  "project_id" : 2,
+  "project" : "followme",
+  "ver" : 2,
+  "mystr_interkafka_ptoffset" : "9_5999849"
+}
