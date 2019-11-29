@@ -27,8 +27,12 @@ object SensorDataToDatawarehouse {
       "-sdpc", "2",
       "-sdpn", "fm",
 
+      /*
       "-sdzkq", "beta-hbase02:2181,beta-hbase03:2181,beta-hbase04:2181/kafka",
       "-sdbstr", "beta-hbase02:9092,beta-hbase03:9092,beta-hbase04:9092",
+       */
+      "-sdzkq", "data01.weiju.sa:2181",
+      "-sdbstr", "data01.weiju.sa:9092",
 
       "-sdkdcat", "presto",
       "-sdkdurl", "beta-hbase01:7051",
