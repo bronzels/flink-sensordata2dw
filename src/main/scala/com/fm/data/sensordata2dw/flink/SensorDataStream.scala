@@ -50,7 +50,12 @@ object SensorDataStream {
           }
 
           val projectValue = util.MyKuduTypeValue.getLong(node, MySensorData.Project_id_field_name)
-          if (projectValue == null || !projectValue.equals(projectId))
+          //logwarn
+          if (projectValue == null) {
+            break
+          }
+          //nologwarn
+          if (!projectValue.equals(projectId))
             break
           val distinct_idValue = util.MyKuduTypeValue.getString(node, MySensorData.Distinct_id_field_name)
           if (distinct_idValue != null)
@@ -96,7 +101,7 @@ object SensorDataStream {
         }
       })
 
-    jsonedFilteredFlattendedStream.map(MyJackson.getString(_)).print()
+    //jsonedFilteredFlattendedStream.map(MyJackson.getString(_)).print()
 
     val outputTag = OutputTag[JsonNode]("usersAsSideOutput")
     val eventsAsMainStream = jsonedFilteredFlattendedStream

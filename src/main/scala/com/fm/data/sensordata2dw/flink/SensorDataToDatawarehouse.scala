@@ -82,7 +82,7 @@ object SensorDataToDatawarehouse {
     val kafkaJsonNodeStreamObj = new KafkaJsonNodeScalaStream(outputPrefix, prefixedStrNameCliInput, streamContext, strZkQuorum, strBrokers, util.Collections.singletonList(myCli.topicName))
 
     val kafkaJsonNodeStream = kafkaJsonNodeStreamObj.getStream
-    kafkaJsonNodeStream.print()
+    //kafkaJsonNodeStream.print()
 
     val streamTuple = SensorDataStream.getStreamJsonedFilteredFlattendedSplitted(kafkaJsonNodeStream, myCli.projectId)
     val streamEvents = streamTuple._1
@@ -92,15 +92,15 @@ object SensorDataToDatawarehouse {
 
     val eventsStreamTuple = SensorDataStream.getEventsLogedinPutSinkedTupleStream(streamEvents, eventsKuduTableEnvConf, usersKuduTableEnvConf, distLockConf)
     val eventsLogedinBulkUpdateStream = eventsStreamTuple._1
-    eventsLogedinBulkUpdateStream.print()
+    //eventsLogedinBulkUpdateStream.print()
     val eventsSinkedStream = eventsStreamTuple._2
-    eventsSinkedStream.print()
+    //eventsSinkedStream.print()
 
     val streamUsers = streamTuple._2
     //streamUsers.map(node => MyJackson.getString(node)).print()
 
     val usersSinkedStream = SensorDataStream.getUsersSinkedStream(streamUsers, usersKuduTableEnvConf, distLockConf)
-    usersSinkedStream.print()
+    //usersSinkedStream.print()
 
     FrameworkScalaInf.env.execute(prefixedStrNameCliInput)
 

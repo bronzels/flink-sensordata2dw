@@ -13,7 +13,11 @@ import org.apache.flink.util.Collector
 
 import scala.util.control.Breaks.{break, breakable}
 
+import org.apache.logging.log4j.LogManager
+
 class SensorDataEventsMainUsers2IdsPutJsonNode2KuduMap(override val kuduTableEnvConf: KuduTableEnvConf, override val distLockConf: DistLockConf) extends Sink2KuduCommonMap[JsonNode, JsonNode](kuduTableEnvConf, distLockConf, MySensorData.isSrcFieldNameWTUpperCase) {
+  private val lo4j2LOG = LogManager.getLogger(classOf[Nothing])
+
   override def flatMap(node: JsonNode, out: Collector[JsonNode]) = {
     val tuple = getKuduAndTsIndex
     val myKudu = tuple._1
