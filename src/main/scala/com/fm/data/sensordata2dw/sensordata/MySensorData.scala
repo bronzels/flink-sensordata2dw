@@ -110,13 +110,22 @@ object MySensorData {
   }
    */
 
-  val Useless_from_beginning_exclude_field_Arr = Array(
+  val Useless_top_layer_exclude_field_Arr = Array(
     "_track_id",
     "_flush_time",
     "map_id",
     "lib",
     "extractor",
-    "ver"
+    "ver",
+
+    "",
+    "",
+    ""
+  )
+
+  val Useless_properties_layer_exclude_field_Arr = Array(
+    "",
+    ""
   )
 
   val Events_at_last_exclude_field_Arr = Array(

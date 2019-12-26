@@ -76,7 +76,7 @@ object SensorDataStream {
            */
 
           import scala.collection.JavaConverters._
-          val origObjNode = MyJackson.getRemoved(node, Useless_from_beginning_exclude_field_Arr.toList.asJava).asInstanceOf[ObjectNode]
+          val origObjNode = MyJackson.getRemoved(node, Useless_top_layer_exclude_field_Arr.toList.asJava).asInstanceOf[ObjectNode]
 
           val flattenedNode = JsonNodeFactory.instance.objectNode()
           val javaIteratorFields = origObjNode.fields()
@@ -176,6 +176,9 @@ object SensorDataStream {
 
     import scala.collection.JavaConverters._
     val bfSinkedStream = eventFilteredSplitedMainStream
+      .map(node => {
+        MyJackson.getRemoved(node, Useless_properties_layer_exclude_field_Arr.toList.asJava)
+      })
       .flatMap(eventsUsers2IdsPutFlatMap)
       .map(node => {
         (Put, MyJackson.getRemoved(node, Events_at_last_exclude_field_Arr.toList.asJava))
@@ -209,7 +212,7 @@ object SensorDataStream {
             case Type_value_users_profile_unset => Unset
             case _ => break
           }
-          if(writeEnum.equals(Delete)) {
+          if (writeEnum.equals(Delete)) {
             val nodeOnlyKeepIdIfDelete = JsonNodeFactory.instance.objectNode()
             nodeOnlyKeepIdIfDelete.put(New_users_id_field_name, node.get(New_users_id_field_name).asText())
             (writeEnum, nodeOnlyKeepIdIfDelete)
