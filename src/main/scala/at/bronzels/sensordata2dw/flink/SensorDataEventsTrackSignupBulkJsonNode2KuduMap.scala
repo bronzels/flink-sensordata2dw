@@ -1,4 +1,4 @@
-package com.fm.data.sensordata2dw.flink
+package at.bronzels.sensordata2dw.flink
 
 import java.util
 
@@ -8,8 +8,8 @@ import at.bronzels.libcdcdw.util.MyLog4j2
 
 import at.bronzels.libcdcdwstr.flink.sink.Sink2KuduCommonMap
 
-import com.fm.data.sensordata2dw.sensordata.MySensorData
-import com.fm.data.sensordata2dw.sensordata.MySensorData.{Distinct_id_field_name, Event_field_name, Event_track_signup_original_id_field_name, New_common_user_id_field_name, Type_field_name, Type_value_events_track_signup}
+import at.bronzels.sensordata2dw.sensordata.MySensorData
+import at.bronzels.sensordata2dw.sensordata.MySensorData.{Distinct_id_field_name, Event_field_name, Event_track_signup_original_id_field_name, New_common_user_id_field_name, Type_field_name, Type_value_events_track_signup}
 
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.JsonNode
 import org.apache.flink.util.Collector

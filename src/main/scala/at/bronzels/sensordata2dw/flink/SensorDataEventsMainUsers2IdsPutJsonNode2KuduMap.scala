@@ -1,18 +1,18 @@
-package com.fm.data.sensordata2dw.flink
+package at.bronzels.sensordata2dw.flink
 
 import java.util
 
 import at.bronzels.libcdcdwstr.flink.util.MyKuduTypeValue
 import at.bronzels.libcdcdw.conf.{DistLockConf, KuduTableEnvConf}
 import at.bronzels.libcdcdwstr.flink.sink.Sink2KuduCommonMap
-import com.fm.data.sensordata2dw.MyName
-import com.fm.data.sensordata2dw.sensordata.MySensorData
-import com.fm.data.sensordata2dw.sensordata.MySensorData._
+import at.bronzels.sensordata2dw.MyName
+import at.bronzels.sensordata2dw.MyName
+import at.bronzels.sensordata2dw.sensordata.MySensorData
+import at.bronzels.sensordata2dw.sensordata.MySensorData._
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.JsonNode
 import org.apache.flink.util.Collector
 
 import scala.util.control.Breaks.{break, breakable}
-
 import org.apache.logging.log4j.LogManager
 
 class SensorDataEventsMainUsers2IdsPutJsonNode2KuduMap(override val kuduTableEnvConf: KuduTableEnvConf, override val distLockConf: DistLockConf) extends Sink2KuduCommonMap[JsonNode, JsonNode](kuduTableEnvConf, distLockConf, MySensorData.isSrcFieldNameWTUpperCase) {

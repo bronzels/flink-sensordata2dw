@@ -1,4 +1,4 @@
-package com.fm.data.sensordata2dw.flink
+package at.bronzels.sensordata2dw.flink
 
 import java.util
 
@@ -8,7 +8,7 @@ import at.bronzels.libcdcdwstr.flink.util.MyJackson
 import at.bronzels.libcdcdwstr.flink.FrameworkScalaInf
 import at.bronzels.libcdcdwstr.flink.bean.ScalaStreamContext
 import at.bronzels.libcdcdwstr.flink.source.KafkaJsonNodeScalaStream
-import com.fm.data.sensordata2dw.CliInput
+import at.bronzels.sensordata2dw.CliInput
 import org.apache.flink.streaming.api.scala._
 
 object SensorDataToDatawarehouse {

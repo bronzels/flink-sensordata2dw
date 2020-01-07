@@ -1,4 +1,4 @@
-package com.fm.data.sensordata2dw
+package at.bronzels.sensordata2dw
 
 import at.bronzels.libcdcdwstr.SimpleCommonCliInput
 import org.apache.commons.cli.{Option, Options}

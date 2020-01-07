@@ -1,6 +1,6 @@
-package com.fm.data.sensordata2dw.sensordata
+package at.bronzels.sensordata2dw.sensordata
 
-import com.fm.data.sensordata2dw.dw.DWName
+import at.bronzels.sensordata2dw.dw.DWName
 
 object MySensorData {
   val isSrcFieldNameWTUpperCase = true

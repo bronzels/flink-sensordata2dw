@@ -1,7 +1,7 @@
-package com.fm.data.sensordata2dw
+package at.bronzels.sensordata2dw
 
-import com.fm.data.sensordata2dw.sensordata.MySensorData.{Distinct_id_field_name, Event_field_name, Time_field_name, Type_field_name}
-import com.fm.data.sensordata2dw.sensordata.MySensorData.{New_users_first_id_field_name, New_users_second_id_field_name}
+import at.bronzels.sensordata2dw.sensordata.MySensorData.{Distinct_id_field_name, Event_field_name, Time_field_name, Type_field_name}
+import at.bronzels.sensordata2dw.sensordata.MySensorData.{New_users_first_id_field_name, New_users_second_id_field_name}
 
 object MyName {
   val MyName_mystr_uuid = "mystr_uuid"
