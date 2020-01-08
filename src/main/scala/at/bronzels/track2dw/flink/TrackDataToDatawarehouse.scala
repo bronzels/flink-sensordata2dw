@@ -1,46 +1,50 @@
-package at.bronzels.sensordata2dw.flink
+package at.bronzels.track2dw.flink
 
 import java.util
 
-import at.bronzels.libcdcdw.conf.{KuduTableEnvConf, DistLockConf}
+import at.bronzels.libcdcdw.conf.{DistLockConf, KuduTableEnvConf}
 import at.bronzels.libcdcdw.util.MyString
 import at.bronzels.libcdcdwstr.flink.util.MyJackson
 import at.bronzels.libcdcdwstr.flink.FrameworkScalaInf
 import at.bronzels.libcdcdwstr.flink.bean.ScalaStreamContext
 import at.bronzels.libcdcdwstr.flink.source.KafkaJsonNodeScalaStream
-import at.bronzels.sensordata2dw.CliInput
+import at.bronzels.track2dw.CliInput
 import org.apache.flink.streaming.api.scala._
+import org.slf4j.{Logger, LoggerFactory}
 
-object SensorDataToDatawarehouse {
+object TrackDataToDatawarehouse {
+
+  val logger: Logger  = LoggerFactory.getLogger("TrackDataToDatawarehouse")
   val sensorDataEventsTableName = "sensordata_events"
   val sensorDataUsersTableName = "sensordata_users"
 
-  val appName = "sensordata2dw"
+  val appName = "track2dw"
 
   def main(args: Array[String]): Unit = {
     //val newargs = args
     val newargs = Array[String](
-      "-f", "4",
-
-      "-sdtp", "event_topic",
+      //"-f", "4",
+      //dw_v_0_0_1_201912_2320::bd_jsd.sensordata_events_fm
+      //"-sdtp", "event_topic",
+      "-sdtp", "event_topic.mirror",
 
       "-sdpc", "2",
       "-sdpn", "fm",
-
-      /*
-      "-sdzkq", "beta-hbase02:2181,beta-hbase03:2181,beta-hbase04:2181/kafka",
+      "-sdzkq", "beta-hbase02:2181,beta-hbase03:2181,beta-hbase04:2181/kafka3",
       "-sdbstr", "beta-hbase02:9092,beta-hbase03:9092,beta-hbase04:9092",
-       */
-      "-sdzkq", "data01.weiju.sa:2181",
-      "-sdbstr", "data01.weiju.sa:9092",
+      //"-sdzkq", "data01.weiju.sa:2181",
+      //"-sdbstr", "data01.weiju.sa:9092",
 
-      "-sdkdcat", "presto",
+      "-sdkdcat", "bd",
       "-sdkdurl", "beta-hbase01:7051",
-      "-sdkddb", "dw_v_0_0_1_20191111_1535",
+      "-sdkddb", "dw_v_0_0_1_20191223_1830",
 
-      "-sddlurl", "beta-hbase01:6379"
+      "-sddlurl", "beta-hbase01:6379",
+      "-suut",
+      "-susidf"
       //"-sddlurl", "beta-hbase02:2181,beta-hbase03:2181,beta-hbase04:2181"
     )
+
 
     val myCli = new CliInput
     val options = myCli.buildOptions()
@@ -67,43 +71,42 @@ object SensorDataToDatawarehouse {
     val kuduUrl = myCli.kuduUrl
     val kuduDatabase = myCli.kuduDatabase
 
-    var eventsTableName: String = MyString.concatBySkippingEmpty(at.bronzels.libcdcdw.Constants.commonSep,
+    val eventsTableName: String = MyString.concatBySkippingEmpty(at.bronzels.libcdcdw.Constants.commonSep,
       sensorDataEventsTableName,
       myCli.getCdcPrefix,
       myCli.projectName)
-    var usersTableName: String = MyString.concatBySkippingEmpty(at.bronzels.libcdcdw.Constants.commonSep,
+    val usersTableName: String = MyString.concatBySkippingEmpty(at.bronzels.libcdcdw.Constants.commonSep,
       sensorDataUsersTableName,
       myCli.getCdcPrefix,
       myCli.projectName)
 
-    val eventsKuduTableEnvConf = new KuduTableEnvConf(kuduCatalog, kuduUrl, kuduDatabase, eventsTableName)
-    val usersKuduTableEnvConf = new KuduTableEnvConf(kuduCatalog, kuduUrl, kuduDatabase, usersTableName)
+    val eventsKuduTableEnvConf = new KuduTableEnvConf(kuduDatabase, kuduUrl, kuduCatalog, eventsTableName)
+    val usersKuduTableEnvConf = new KuduTableEnvConf(kuduDatabase, kuduUrl, kuduCatalog, usersTableName)
 
     val kafkaJsonNodeStreamObj = new KafkaJsonNodeScalaStream(outputPrefix, prefixedStrNameCliInput, streamContext, strZkQuorum, strBrokers, util.Collections.singletonList(myCli.topicName))
 
     val kafkaJsonNodeStream = kafkaJsonNodeStreamObj.getStream
     //kafkaJsonNodeStream.print()
 
-    val streamTuple = SensorDataStream.getStreamJsonedFilteredFlattendedSplitted(kafkaJsonNodeStream, myCli.projectId)
+    val streamTuple = TrackDataStream.getStreamJsonedFilteredFlattendedSplitted(kafkaJsonNodeStream, myCli.projectId, myCli.isUpdateUserTable)
     val streamEvents = streamTuple._1
-    //streamEvents.map(node => MyJackson.getString(node)).print()
+    streamEvents.map(node => MyJackson.getString(node)).print()
 
     val distLockConf = new DistLockConf(myCli.distLockUrl, MyString.concatBySkippingEmpty(at.bronzels.libcdcdw.Constants.commonSep, appName, myCli.getCdcPrefix, myCli.projectName))
 
-    val eventsStreamTuple = SensorDataStream.getEventsLogedinPutSinkedTupleStream(streamEvents, eventsKuduTableEnvConf, usersKuduTableEnvConf, distLockConf)
+    val eventsStreamTuple = TrackDataStream.getEventsLogedinPutSinkedTupleStream(streamEvents, eventsKuduTableEnvConf, usersKuduTableEnvConf, distLockConf)
     val eventsLogedinBulkUpdateStream = eventsStreamTuple._1
     //eventsLogedinBulkUpdateStream.print()
     val eventsSinkedStream = eventsStreamTuple._2
-    //eventsSinkedStream.print()
+    eventsSinkedStream.print()
 
-    val streamUsers = streamTuple._2
-    //streamUsers.map(node => MyJackson.getString(node)).print()
-
-    val usersSinkedStream = SensorDataStream.getUsersSinkedStream(streamUsers, usersKuduTableEnvConf, distLockConf)
-    //usersSinkedStream.print()
-
-    FrameworkScalaInf.env.execute(prefixedStrNameCliInput)
-
+    if (myCli.isUpdateUserTable) {
+      val streamUsers = streamTuple._2
+      //streamUsers.map(node => MyJackson.getString(node)).print()
+      val usersSinkedStream = TrackDataStream.getUsersSinkedStream(streamUsers, usersKuduTableEnvConf, distLockConf, myCli.isOnlySaveUserIdsField)
+      //usersSinkedStream.print()
+      FrameworkScalaInf.env.execute(prefixedStrNameCliInput)
+    }
   }
 
 }

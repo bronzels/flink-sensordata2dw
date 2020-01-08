@@ -1,4 +1,4 @@
-package at.bronzels.sensordata2dw
+package at.bronzels.track2dw
 
 import at.bronzels.libcdcdwstr.SimpleCommonCliInput
 import org.apache.commons.cli.{Option, Options}
@@ -19,6 +19,10 @@ class CliInput extends SimpleCommonCliInput {
   var kuduDatabase:String = _
 
   var distLockUrl:String = _
+
+  var isOnlySaveUserIdsField: Boolean = false
+
+  var isUpdateUserTable: Boolean = false
 
   override def buildOptions(): Options = {
     val options = super.buildOptions()
@@ -58,6 +62,13 @@ class CliInput extends SimpleCommonCliInput {
     //redis url
     val optionRedisUrl = new Option("sddlurl", "distLockUrl", true, "redis/zookeeper host:port/host1:port1,host2:port2")
     optionRedisUrl.setRequired(true);options.addOption(optionRedisUrl)
+
+
+    val optionOnlySaveUserIdsField = new Option("susidf", "onlySaveUserIdsField", false, "only save users user_id,first_id,second_id field")
+    optionOnlySaveUserIdsField.setRequired(false);options.addOption(optionOnlySaveUserIdsField)
+
+    val isSaveUserTable = new Option("suut", "isUpdateUserTable", false, "update users table")
+    isSaveUserTable.setRequired(false);options.addOption(isSaveUserTable)
 
     options
   }
@@ -103,6 +114,13 @@ class CliInput extends SimpleCommonCliInput {
 
     if (comm.hasOption("sddlurl")) {
       distLockUrl = comm.getOptionValue("sddlurl")
+    }
+
+    if (comm.hasOption("susidf")) {
+      this.isOnlySaveUserIdsField = true;
+    }
+    if (comm.hasOption("suut")){
+      this.isUpdateUserTable = true
     }
 
     return false

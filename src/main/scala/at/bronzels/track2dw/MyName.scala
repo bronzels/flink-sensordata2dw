@@ -1,7 +1,7 @@
-package at.bronzels.sensordata2dw
+package at.bronzels.track2dw
 
-import at.bronzels.sensordata2dw.sensordata.MySensorData.{Distinct_id_field_name, Event_field_name, Time_field_name, Type_field_name}
-import at.bronzels.sensordata2dw.sensordata.MySensorData.{New_users_first_id_field_name, New_users_second_id_field_name}
+import at.bronzels.track2dw.sensordata.MySensorData.{Distinct_id_field_name, Event_field_name, Time_field_name}
+import at.bronzels.track2dw.sensordata.MySensorData.{New_users_first_id_field_name, New_users_second_id_field_name}
 
 object MyName {
   val MyName_mystr_uuid = "mystr_uuid"
@@ -17,7 +17,6 @@ object MyName {
 
   val Events_primary_key_arr = Array(
     Distinct_id_field_name,
-    Type_field_name,
     Event_field_name,
     Time_field_name,
     MyName_mystr_uuid

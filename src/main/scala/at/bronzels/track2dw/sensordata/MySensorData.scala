@@ -1,6 +1,8 @@
-package at.bronzels.sensordata2dw.sensordata
+package at.bronzels.track2dw.sensordata
 
-import at.bronzels.sensordata2dw.dw.DWName
+import at.bronzels.libcdcdwstr.flink.util.MyJackson
+import at.bronzels.track2dw.dw.DWName
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.node.JsonNodeType
 
 object MySensorData {
   val isSrcFieldNameWTUpperCase = true
@@ -16,7 +18,9 @@ object MySensorData {
   val Event_field_name = "event"
   //track_signup type specific
   val Event_track_signup_original_id_field_name = "original_id"
-  val Event_properties_dollaris_login_id = "$is_login_id"
+  //val Event_properties_dollaris_login_id = "$is_login_id"
+  val Event_properties_dollaris_login_id = "d_is_login_id"
+
 
   val Properties_field_name = "properties"
 
@@ -70,6 +74,8 @@ object MySensorData {
   val New_users_first_id_field_name = "first_id"
   val New_users_second_id_field_name = "second_id"
 
+  val user_only_ids_field_arr = Array(New_users_id_field_name, New_users_first_id_field_name, New_users_second_id_field_name)
+
   val Reserved_table_name_events = "events"
   val Reserved_table_name_users = "users"
 
@@ -117,20 +123,33 @@ object MySensorData {
     "lib",
     "extractor",
     "ver",
-
-    "",
-    "",
-    ""
+    "dtk",
+    "process_time",
+    "ngx_ip",
+    "raw_original_id",
+    "original_id",
+    "otime",
+    "_latest_pid",
+    "original_type",
+    "jssdk_error",
+    "_latest_pid"
   )
 
   val Useless_properties_layer_exclude_field_Arr = Array(
-    "",
-    ""
+    "_latest_vcode",
+    "islogin",
+    "email",
+    MySensorData.Distinct_id_field_name,
+    MySensorData.Type_field_name,
+    MySensorData.Time_field_name,
+    MySensorData.Project_id_field_name,
+    MySensorData.Properties_field_name
   )
 
+
   val Events_at_last_exclude_field_Arr = Array(
-    Project_id_field_name,
-    Project_name_field_name
+    Project_name_field_name,
+    Project_id_field_name
   )
 
   val Users_at_last_exclude_field_Arr = Array(
@@ -140,5 +159,26 @@ object MySensorData {
     Project_name_field_name,
     Distinct_id_field_name
   )
+
+
+  val event_properties_field_rename: Map[String, String] = Map(
+    "recv_time" -> "d_receive_time"
+  )
+
+  def process_events_dollar_field_name(fieldName: String): String = {
+    if(event_properties_field_rename.contains(fieldName))
+      event_properties_field_rename.getOrElse(fieldName, fieldName)
+    else if (fieldName.indexOf("$") > -1)
+      dollarFieldRename(fieldName)
+    else if (Useless_properties_layer_exclude_field_Arr.contains(fieldName))
+      null
+    else
+      fieldName
+  }
+
+  def dollarFieldRename(inputStr: String): String = {
+    inputStr.replace("$", "d_")
+  }
+
 
 }
