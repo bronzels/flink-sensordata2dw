@@ -80,8 +80,8 @@ object TrackDataToDatawarehouse {
       myCli.getCdcPrefix,
       myCli.projectName)
 
-    val eventsKuduTableEnvConf = new KuduTableEnvConf(kuduDatabase, kuduUrl, kuduCatalog, eventsTableName)
-    val usersKuduTableEnvConf = new KuduTableEnvConf(kuduDatabase, kuduUrl, kuduCatalog, usersTableName)
+    val eventsKuduTableEnvConf = new KuduTableEnvConf(kuduDatabase, kuduUrl, kuduCatalog, eventsTableName, null)
+    val usersKuduTableEnvConf = new KuduTableEnvConf(kuduDatabase, kuduUrl, kuduCatalog, usersTableName, null)
 
     val kafkaJsonNodeStreamObj = new KafkaJsonNodeScalaStream(outputPrefix, prefixedStrNameCliInput, streamContext, strZkQuorum, strBrokers, util.Collections.singletonList(myCli.topicName))
 
