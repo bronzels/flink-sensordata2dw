@@ -58,7 +58,7 @@
 -->
             </patternLayout>
 
-            <Property name="bootstrap.servers">beta-hbase02:9092,beta-hbase03:9092,beta-hbase04:9092</Property>
+            <Property name="bootstrap.servers">beta-hbase02:9492,beta-hbase03:9492,beta-hbase04:9492</Property>
         </Kafka>
 
     </appenders>

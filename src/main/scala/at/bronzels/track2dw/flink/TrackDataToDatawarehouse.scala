@@ -21,7 +21,8 @@ object TrackDataToDatawarehouse {
   val appName = "track2dw"
 
   def main(args: Array[String]): Unit = {
-    //val newargs = args
+    val newargs = args
+    /*
     val newargs = Array[String](
       //"-f", "4",
       //dw_v_0_0_1_201912_2320::bd_jsd.sensordata_events_fm
@@ -44,7 +45,7 @@ object TrackDataToDatawarehouse {
       "-susidf"
       //"-sddlurl", "beta-hbase02:2181,beta-hbase03:2181,beta-hbase04:2181"
     )
-
+    */
 
     val myCli = new CliInput
     val options = myCli.buildOptions()

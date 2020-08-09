@@ -61,7 +61,7 @@
             -->
             <JSONLayout properties="true" objectMessageAsJsonObject="true">
             </JSONLayout>
-            <Property name="bootstrap.servers">pro-hbase02:9092,pro-hbase03:9092,pro-hbase04:9092</Property>
+            <Property name="bootstrap.servers">pro-hbase02:9492,pro-hbase03:9492,pro-hbase04:9492</Property>
         </Kafka>
 
     </appenders>
