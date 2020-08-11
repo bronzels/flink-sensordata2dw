@@ -91,7 +91,7 @@ object TrackDataToDatawarehouse {
 
     val streamTuple = TrackDataStream.getStreamJsonedFilteredFlattendedSplitted(kafkaJsonNodeStream, myCli.projectId, myCli.isUpdateUserTable)
     val streamEvents = streamTuple._1
-    streamEvents.map(node => MyJackson.getString(node)).print()
+    //streamEvents.map(node => MyJackson.getString(node)).print()
 
     val distLockConf = new DistLockConf(myCli.distLockUrl, MyString.concatBySkippingEmpty(at.bronzels.libcdcdw.Constants.commonSep, appName, myCli.getCdcPrefix, myCli.projectName))
 
@@ -99,7 +99,7 @@ object TrackDataToDatawarehouse {
     val eventsLogedinBulkUpdateStream = eventsStreamTuple._1
     //eventsLogedinBulkUpdateStream.print()
     val eventsSinkedStream = eventsStreamTuple._2
-    eventsSinkedStream.print()
+    //eventsSinkedStream.print()
 
     if (myCli.isUpdateUserTable) {
       val streamUsers = streamTuple._2
