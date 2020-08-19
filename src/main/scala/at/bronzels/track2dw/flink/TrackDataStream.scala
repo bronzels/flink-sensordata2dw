@@ -6,6 +6,7 @@ import at.bronzels.libcdcdw.bean.MyLogContext
 import at.bronzels.libcdcdw.kudu.myenum.KuduWriteEnum
 import at.bronzels.libcdcdw.kudu.myenum.KuduWriteEnum._
 import at.bronzels.libcdcdw.conf.{DistLockConf, KuduTableEnvConf}
+import at.bronzels.libcdcdw.util.MyDateTime
 import at.bronzels.libcdcdwstr.bean.SourceRecordKafkaJsonNode
 import at.bronzels.libcdcdwstr.flink.global.MyParameterTool
 import at.bronzels.libcdcdwstr.flink.util
@@ -146,8 +147,14 @@ object TrackDataStream {
                 if (typeValue.equals(MySensorData.Type_value_events_track_signup) && withUserUpdate) {
                   ctx.output(outputTag, node)
                 }
-                val objNode = node.asInstanceOf[ObjectNode]
+                var objNode = node.asInstanceOf[ObjectNode]
                 objNode.put(MyName_mystr_uuid, UUID.randomUUID().toString)
+                val time = objNode.get(MySensorData.Time_field_name).asLong();
+                val timeWithPRCOffset = time - at.bronzels.libcdcdw.Constants.msPrcOffset
+                objNode = objNode.put(MySensorData.Time_field_name, timeWithPRCOffset);
+                val date = MyDateTime.timeStampLong2Date(time, "yyyy-MM-dd")
+                //val date = timeWithPRCOffset - timeWithPRCOffset % at.bronzels.libcdcdw.Constants.msPerDay
+                objNode = objNode.put(MySensorData._purely_madeup_Date_field_name, date);
                 //objNode.put(MyName.MyName_mystr_dollarkafka_offset, )
                 val nodeWithUUID = objNode.asInstanceOf[JsonNode]
                 // 将数据发送到常规输出中

@@ -11,6 +11,7 @@ object MySensorData {
   val Distinct_id_field_name = "distinct_id"
   val Type_field_name = "type"
   val Time_field_name = "time"
+  val _purely_madeup_Date_field_name = "date"
   val Project_id_field_name = "project_id"
   val Project_name_field_name = "project"
 
